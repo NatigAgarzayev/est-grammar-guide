@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eesti keele grammatika — Estonian Grammar A1–B2</title>
+<meta name="description" content="A learner's reference for Estonian grammar from A1 to B2: cases, verbs, word order and more.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5.8' y='5.8' width='12.4' height='12.4' fill='%23C2913A'/%3E%3Crect x='5.8' y='5.8' width='12.4' height='12.4' transform='rotate(45 12 12)' fill='%23C2913A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF6EE;
+  --paper:#FFFFFF;
+  --ink:#2A2C33;
+  --soft-ink:#4C4F58;
+  --muted:#6B6E78;
+  --line:#E6DFD0;
+  --blue:#4D6FBE;
+  --blue-deep:#3A5697;
+  --blue-tint:#EEF2FB;
+  --green:#3E6B4F;
+  --green-tint:#EDF4EE;
+  --gold:#C2913A;
+  --gold-deep:#9A6F1D;
+  --gold-tint:#FBF3DF;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:16.5px;line-height:1.65;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+::selection{background:var(--gold-tint);color:var(--ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+svg.star{display:inline-block;fill:currentColor;flex:none}
+.folk-band{height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='66' height='12' viewBox='0 0 66 12'%3E%3Crect y='5.4' width='66' height='1.2' fill='%23E3D9C5'/%3E%3Cpath d='M11 1.5 15.5 6 11 10.5 6.5 6Z' fill='%234D6FBE'/%3E%3Cpath d='M33 1.5 37.5 6 33 10.5 28.5 6Z' fill='%23C2913A'/%3E%3Cpath d='M55 1.5 59.5 6 55 10.5 50.5 6Z' fill='%233E6B4F'/%3E%3C/svg%3E") repeat-x center/66px 12px}
+
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:58px;z-index:50;align-items:center;gap:.8rem;padding:0 1rem;background:rgba(250,246,238,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .t-title{font-family:var(--serif);font-weight:600;font-size:1rem}
+.burger{width:40px;height:40px;border:1px solid var(--line);background:var(--paper);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4.5px;cursor:pointer}
+.burger span{width:17px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s ease,opacity .2s ease}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.overlay{position:fixed;inset:0;background:rgba(42,44,51,.38);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:55}
+body.nav-open .overlay{opacity:1;pointer-events:auto}
+
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:300px;z-index:60;display:flex;flex-direction:column;background:#FFFCF5;border-right:1px solid var(--line);padding:1.9rem 1.3rem 1.4rem;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:#E3DAC8;border-radius:8px}
+.brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--ink);padding:.2rem .35rem 1.2rem;border-bottom:1px solid var(--line);margin-bottom:1.2rem}
+.brand .star{width:32px;height:32px;color:var(--gold)}
+.brand-title{display:block;font-family:var(--serif);font-weight:600;font-size:1.04rem;line-height:1.25}
+.brand-sub{display:block;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.15rem}
+.nav{flex:1}
+.nav-group{margin-bottom:1rem}
+.nav-chapter{display:flex;align-items:center;gap:.55rem;font-family:var(--serif);font-weight:600;font-size:1rem;color:var(--ink);text-decoration:none;padding:.45rem .55rem;border-radius:8px;transition:background .15s ease}
+.nav-chapter:hover{background:var(--blue-tint)}
+.nav-chapter.active{background:var(--blue-tint);color:var(--blue-deep)}
+.badge{font-family:var(--sans);font-size:.6rem;font-weight:700;letter-spacing:.07em;padding:.16rem .44rem;border-radius:99px;color:#fff;text-transform:uppercase}
+.badge.intro{background:#8B8E98}
+.badge.a1{background:var(--blue)}
+.badge.a2{background:var(--green)}
+.badge.b1{background:var(--gold)}
+.badge.b2{background:var(--blue-deep)}
+.nav-sub{display:block;font-size:.88rem;color:var(--muted);text-decoration:none;padding:.28rem .6rem .28rem 1rem;margin-left:.95rem;border-left:2px solid var(--line);transition:color .15s ease,border-color .15s ease}
+.nav-sub:hover{color:var(--ink);border-color:var(--gold)}
+.nav-sub.active{color:var(--blue-deep);border-color:var(--blue);font-weight:600;background:linear-gradient(90deg,var(--blue-tint),transparent)}
+.sidebar-foot{font-size:.78rem;color:var(--muted);text-align:center;padding-top:1rem;border-top:1px solid var(--line)}
+
+.content{margin-left:300px;padding:3.2rem 3rem 5rem}
+.page{max-width:780px;margin:0 auto}
+.hero{padding-bottom:.6rem}
+.hero .star{width:42px;height:42px;color:var(--gold);margin-bottom:1rem}
+.eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep)}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,4.5vw,3rem);line-height:1.12;margin:.4rem 0 .9rem}
+.lead{font-size:1.1rem;color:var(--soft-ink);max-width:60ch}
+.hero .folk-band{margin:2rem 0 2.6rem}
+
+.chapter{margin-bottom:4.2rem}
+.chapter-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.85rem,3.3vw,2.45rem);line-height:1.15;margin:.35rem 0 .8rem}
+.chapter-head .folk-band{margin:1.6rem 0 .4rem}
+section{scroll-margin-top:2rem}
+.page h3{font-family:var(--serif);font-weight:600;font-size:1.42rem;line-height:1.25;margin:2.7rem 0 .9rem;display:flex;align-items:center;gap:.6rem}
+.page h3 .star{width:13px;height:13px;color:var(--blue)}
+.page h4{font-family:var(--serif);font-weight:600;font-size:1.1rem;margin:1.7rem 0 .55rem}
+.page p{margin-bottom:1rem;max-width:70ch;color:var(--ink)}
+.page p.note-sub{color:var(--muted);font-size:.92rem}
+code{font-family:inherit;font-weight:600;font-size:.93em;color:var(--blue-deep);background:var(--blue-tint);padding:.08em .38em;border-radius:5px;white-space:nowrap}
+
+.table-wrap{overflow-x:auto;margin:1.15rem 0 1.6rem;background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 2px rgba(42,44,51,.05)}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.7rem .9rem;border-bottom:2px solid var(--ink);white-space:nowrap}
+td{padding:.55rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:#FBF8F1}
+tbody tr:last-child td{border-bottom:none}
+td.et{color:var(--blue-deep);font-weight:600;white-space:nowrap}
+td.en{color:var(--muted)}
+
+.tip{display:flex;gap:.85rem;background:var(--gold-tint);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:1rem 1.25rem;margin:1.4rem 0}
+.tip .star{width:15px;height:15px;color:var(--gold);margin-top:.25rem}
+.tip .label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.3rem}
+.tip p{margin:0;font-size:.95rem;max-width:65ch}
+.tip p + p{margin-top:.5rem}
+.tip.blue{background:var(--blue-tint);border-color:var(--blue)}
+.tip.blue .star{color:var(--blue)}
+.tip.blue .label{color:var(--blue-deep)}
+
+.examples{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:1.1rem 1.3rem;margin:1.4rem 0}
+.examples .label{display:flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--green);margin-bottom:.55rem;max-width:none}
+.examples .label .star{width:12px;height:12px}
+.ex{padding:.5rem 0;border-bottom:1px dashed var(--line)}
+.ex:last-child{border-bottom:none;padding-bottom:.1rem}
+.ex .et-line{font-family:var(--serif);font-size:1.05rem;font-weight:500;margin:0;color:var(--ink)}
+.ex .en-line{font-size:.88rem;color:var(--muted);margin:.12rem 0 0}
+
+footer{margin-top:4rem;text-align:center;color:var(--muted)}
+footer .folk-band{margin-bottom:2rem}
+footer .star{width:26px;height:26px;color:var(--gold);margin-bottom:.7rem}
+footer p{font-size:.92rem}
+footer .et-foot{font-family:var(--serif);font-size:1.05rem;color:var(--ink)}
+
+@media (max-width:940px){
+  .topbar{display:flex}
+  .sidebar{transform:translateX(-100%);transition:transform .3s ease;width:290px;box-shadow:0 0 40px rgba(42,44,51,.18);padding-top:1.4rem}
+  .sidebar.open{transform:none}
+  .content{margin-left:0;padding:90px 1.3rem 4rem}
+  section{scroll-margin-top:84px}
+  .hero h1{font-size:2.1rem}
+}
+@media (max-width:480px){
+  body{font-size:15.5px}
+  .content{padding:84px 1rem 3.5rem}
+  td,th{padding:.5rem .6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="star8" viewBox="0 0 24 24">
+    <rect x="5.8" y="5.8" width="12.4" height="12.4"></rect>
+    <rect x="5.8" y="5.8" width="12.4" height="12.4" transform="rotate(45 12 12)"></rect>
+  </symbol>
+</svg>
+
+<div class="topbar">
+  <button class="burger" id="burger" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+  <span class="t-title">Eesti keele grammatika</span>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Chapters">
+  <a class="brand" href="#top">
+    <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+    <span>
+      <span class="brand-title">Eesti keele grammatika</span>
+      <span class="brand-sub">Estonian grammar · A1–B2</span>
+    </span>
+  </a>
+  <nav class="nav" aria-label="Site navigation">
+    <div class="nav-group">
+      <a class="nav-chapter" href="#ch1"><span class="badge intro">Intro</span>Introduction</a>
+      <a class="nav-sub" href="#about">About the language</a>
+      <a class="nav-sub" href="#alphabet">The alphabet</a>
+      <a class="nav-sub" href="#pronunciation">Pronunciation</a>
+    </div>
+    <div class="nav-group">
+      <a class="nav-chapter" href="#ch2"><span class="badge a1">A1</span>Basics</a>
+      <a class="nav-sub" href="#cases-intro">Nouns &amp; cases intro</a>
+      <a class="nav-sub" href="#pronouns">Personal pronouns</a>
+      <a class="nav-sub" href="#olema">The verb <em>olema</em></a>
+      <a class="nav-sub" href="#numbers">Numbers 1–10</a>
+      <a class="nav-sub" href="#greetings">Common greetings</a>
+    </div>
+    <div class="nav-group">
+      <a class="nav-chapter" href="#ch3"><span class="badge a2">A2</span>Elementary</a>
+      <a class="nav-sub" href="#fourteen-cases">The 14 cases</a>
+      <a class="nav-sub" href="#present-tense">Present tense verbs</a>
+      <a class="nav-sub" href="#negation">Negation</a>
+      <a class="nav-sub" href="#adjectives">Adjective agreement</a>
+      <a class="nav-sub" href="#sentence-structure">Basic sentence structure</a>
+    </div>
+    <div class="nav-group">
+      <a class="nav-chapter" href="#ch4"><span class="badge b1">B1</span>Intermediate</a>
+      <a class="nav-sub" href="#past-future">Past &amp; future tenses</a>
+      <a class="nav-sub" href="#postpositions">Postpositions</a>
+      <a class="nav-sub" href="#conditional">Conditional mood</a>
+      <a class="nav-sub" href="#questions">Question formation</a>
+      <a class="nav-sub" href="#word-order">Word order rules</a>
+    </div>
+    <div class="nav-group">
+      <a class="nav-chapter" href="#ch5"><span class="badge b2">B2</span>Upper-Intermediate</a>
+      <a class="nav-sub" href="#aspect">Verb aspect</a>
+      <a class="nav-sub" href="#complex-sentences">Complex sentences</a>
+      <a class="nav-sub" href="#participles">Participles</a>
+      <a class="nav-sub" href="#reported-speech">Reported speech</a>
+      <a class="nav-sub" href="#idioms">Common idioms</a>
+    </div>
+  </nav>
+  <p class="sidebar-foot">Head õppimist! · Happy studying</p>
+</aside>
+
+<main class="content">
+  <div class="page">
+
+    <header class="hero" id="top">
+      <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="eyebrow">Eesti keele grammatika</p>
+      <h1>Estonian Grammar</h1>
+      <p class="lead">A learner's reference from A1 to B2 — cases, verbs, word order, and the small details in between. Work through the chapters in order, or jump straight to the rule you need.</p>
+      <div class="folk-band"></div>
+    </header>
+
+    <section class="chapter" id="ch1">
+      <div class="chapter-head">
+        <p class="eyebrow">Peatükk 1 · Sissejuhatus</p>
+        <h2>Introduction to Estonian</h2>
+        <p class="lead">What kind of language Estonian is, how its alphabet works, and how to read words aloud before you know any grammar at all.</p>
+        <div class="folk-band"></div>
+      </div>
+
+      <section id="about">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>About the Estonian language</h3>
+        <p>Estonian (<em>eesti keel</em>) is spoken by about 1.1 million people, mainly in Estonia. It is not related to Russian, German, or the other Indo-European languages around it. Instead it belongs to the Finno-Ugric branch of the Uralic family, making Finnish its closest major relative and Hungarian a distant cousin.</p>
+        <p>For a learner, this family background explains most of what makes Estonian feel unusual:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Feature</th><th>What it means for you</th></tr></thead>
+            <tbody>
+              <tr><td class="et">No grammatical gender</td><td><em>tema</em> means both <em>he</em> and <em>she</em> — one word, no guessing.</td></tr>
+              <tr><td class="et">No articles</td><td>There is no <em>a</em> or <em>the</em>. <em>Raamat</em> is "a book" or "the book" depending on context.</td></tr>
+              <tr><td class="et">14 grammatical cases</td><td>Word endings do the work that English prepositions do: <em>majas</em> = "in the house".</td></tr>
+              <tr><td class="et">No future tense</td><td>The present tense covers the future: <em>Homme lähen tööle</em> = "Tomorrow I('ll) go to work".</td></tr>
+              <tr><td class="et">Agglutinative endings</td><td>Meanings stack onto word stems piece by piece, so words can get long but stay logical.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Cases sound intimidating, but most of them behave like glued-on prepositions. If you can learn "in", "on", and "with" in English, you can learn <code>-s</code>, <code>-l</code>, and <code>-ga</code> in Estonian.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="alphabet">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>The alphabet</h3>
+        <p>Estonian uses the Latin alphabet with a few extra letters: <strong>õ, ä, ö, ü</strong>, plus <strong>š</strong> and <strong>ž</strong> in loanwords. The letters <em>c, q, w, x, y</em> appear only in foreign names. Spelling is almost perfectly phonetic — once you know the sounds, you can read any word aloud.</p>
+        <h4>The nine vowels</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Letter</th><th>Sounds like</th><th>Example</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="et">a</td><td>"a" in <em>father</em></td><td class="et">kala</td><td class="en">fish</td></tr>
+              <tr><td class="et">e</td><td>"e" in <em>bed</em></td><td class="et">tere</td><td class="en">hello</td></tr>
+              <tr><td class="et">i</td><td>"ee" in <em>see</em>, but short</td><td class="et">ilus</td><td class="en">beautiful</td></tr>
+              <tr><td class="et">o</td><td>"o" in <em>north</em>, but short</td><td class="et">oma</td><td class="en">own</td></tr>
+              <tr><td class="et">u</td><td>"oo" in <em>book</em></td><td class="et">uks</td><td class="en">door</td></tr>
+              <tr><td class="et">õ</td><td>no English match — say "uh" with relaxed, unrounded lips</td><td class="et">õun</td><td class="en">apple</td></tr>
+              <tr><td class="et">ä</td><td>"a" in <em>cat</em></td><td class="et">käsi</td><td class="en">hand</td></tr>
+              <tr><td class="et">ö</td><td>German "ö" — say "e" with rounded lips</td><td class="et">öö</td><td class="en">night</td></tr>
+              <tr><td class="et">ü</td><td>German "ü" — say "ee" with rounded lips</td><td class="et">üks</td><td class="en">one</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h4>Consonant notes</h4>
+        <p>Consonants are close to English with a few quirks: <code>r</code> is rolled, <code>s</code> is always voiceless (never a "z" sound), and <code>h</code> is light. The letters <code>b</code>, <code>d</code>, <code>g</code> are pronounced softly, almost like weak <em>p</em>, <em>t</em>, <em>k</em>. <code>š</code> ("sh") and <code>ž</code> ("zh") appear only in loanwords like <em>šokolaad</em> (chocolate) and <em>žest</em> (gesture).</p>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>The vowel <strong>õ</strong> is the most famously difficult Estonian sound, and even neighbouring Finnish does not have it. Don't worry about perfecting it early — Estonians will understand you, and your ear will tune in with exposure.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="pronunciation">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Pronunciation guide</h3>
+        <p>Two rules carry you a long way. First, <strong>stress is always on the first syllable</strong> of a word (rare exceptions like <em>aitäh</em> and some loanwords). Second, <strong>every letter is pronounced</strong> — there are no silent letters.</p>
+        <p>Estonian also distinguishes <strong>three degrees of length</strong> in vowels and consonants: short, long, and overlong. Double letters in writing mark long sounds; overlong length is not written but is heard.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Degree</th><th>Word</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Short</td><td class="et">lina</td><td class="en">linen, sheet</td></tr>
+              <tr><td>Long</td><td class="et">linna</td><td class="en">of the city (genitive)</td></tr>
+              <tr><td>Overlong</td><td class="et">linna</td><td class="en">into the city (illative)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Length can change a word's grammatical meaning, as in <em>linna</em> above — the spelling is identical and only the spoken length differs. As a beginner, simply hold double letters noticeably longer than single ones and let the rest come with listening practice.</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Tere! Mina olen Anna.</p><p class="en-line">Hello! I am Anna.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Eesti keel on ilus keel.</p><p class="en-line">Estonian is a beautiful language.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ma õpin eesti keelt.</p><p class="en-line">I am learning Estonian.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="chapter" id="ch2">
+      <div class="chapter-head">
+        <p class="eyebrow">Peatükk 2 · Tase A1</p>
+        <h2>Basics</h2>
+        <p class="lead">The first building blocks: how nouns change, who is who, the most important verb in the language, counting to ten, and saying hello.</p>
+        <div class="folk-band"></div>
+      </div>
+
+      <section id="cases-intro">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Nouns &amp; cases — a gentle introduction</h3>
+        <p>Estonian nouns have no gender and no articles, but they change their endings depending on their role in the sentence. Every noun has <strong>three basic forms</strong> that you should learn together, like a verb's principal parts:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Form</th><th>Question</th><th>Example</th><th>Used for</th></tr></thead>
+            <tbody>
+              <tr><td class="et">nimetav <span class="en">(nominative)</span></td><td class="et">kes? mis?</td><td class="et">raamat</td><td>the dictionary form; the subject of a sentence</td></tr>
+              <tr><td class="et">omastav <span class="en">(genitive)</span></td><td class="et">kelle? mille?</td><td class="et">raamatu</td><td>possession ("of the book"); the stem most other cases are built on</td></tr>
+              <tr><td class="et">osastav <span class="en">(partitive)</span></td><td class="et">keda? mida?</td><td class="et">raamatut</td><td>partial or indefinite objects, amounts, after numbers</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A few more nouns in all three forms — notice that the changes are not always predictable, which is exactly why the forms are memorised as a set:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nimetav</th><th>Omastav</th><th>Osastav</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="et">keel</td><td class="et">keele</td><td class="et">keelt</td><td class="en">language, tongue</td></tr>
+              <tr><td class="et">sõber</td><td class="et">sõbra</td><td class="et">sõpra</td><td class="en">friend</td></tr>
+              <tr><td class="et">linn</td><td class="et">linna</td><td class="et">linna</td><td class="en">city</td></tr>
+              <tr><td class="et">tüdruk</td><td class="et">tüdruku</td><td class="et">tüdrukut</td><td class="en">girl</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Whenever you learn a new noun, learn it as a triple: <em>raamat – raamatu – raamatut</em>. Almost all of the 14 cases are formed by adding a simple ending to the <strong>omastav</strong> form, so these three forms unlock the whole system.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="pronouns">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Personal pronouns</h3>
+        <p>Each pronoun has a <strong>long</strong> and a <strong>short</strong> form. The short forms are used in everyday neutral speech; the long forms add emphasis or contrast.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Long form</th><th>Short form</th><th>English</th></tr></thead>
+            <tbody>
+              <tr><td>1st sg</td><td class="et">mina</td><td class="et">ma</td><td class="en">I</td></tr>
+              <tr><td>2nd sg</td><td class="et">sina</td><td class="et">sa</td><td class="en">you (informal)</td></tr>
+              <tr><td>3rd sg</td><td class="et">tema</td><td class="et">ta</td><td class="en">he / she</td></tr>
+              <tr><td>1st pl</td><td class="et">meie</td><td class="et">me</td><td class="en">we</td></tr>
+              <tr><td>2nd pl</td><td class="et">teie</td><td class="et">te</td><td class="en">you (plural / polite)</td></tr>
+              <tr><td>3rd pl</td><td class="et">nemad</td><td class="et">nad</td><td class="en">they</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p><em>Teie</em> doubles as the polite singular "you", like French <em>vous</em>. Use it with strangers, officials, and older people until invited to switch to <em>sina</em>. And since Estonian has no gender, <em>tema/ta</em> covers both "he" and "she".</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Mina olen Natig, aga kes oled sina?</p><p class="en-line">I am Natig — but who are you? (long forms for contrast)</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ta elab Tartus.</p><p class="en-line">He/She lives in Tartu.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Kas te räägite inglise keelt?</p><p class="en-line">Do you (polite) speak English?</p></div>
+        </div>
+      </section>
+
+      <section id="olema">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>The verb <em>olema</em> — to be</h3>
+        <p><em>Olema</em> is the most frequent verb in Estonian. Its present tense is irregular but short, and the third person uses the same form in singular and plural.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Affirmative</th><th>Negative</th><th>English</th></tr></thead>
+            <tbody>
+              <tr><td class="et">ma</td><td class="et">olen</td><td class="et">ei ole / pole</td><td class="en">I am / am not</td></tr>
+              <tr><td class="et">sa</td><td class="et">oled</td><td class="et">ei ole / pole</td><td class="en">you are / are not</td></tr>
+              <tr><td class="et">ta</td><td class="et">on</td><td class="et">ei ole / pole</td><td class="en">he/she is / is not</td></tr>
+              <tr><td class="et">me</td><td class="et">oleme</td><td class="et">ei ole / pole</td><td class="en">we are / are not</td></tr>
+              <tr><td class="et">te</td><td class="et">olete</td><td class="et">ei ole / pole</td><td class="en">you are / are not</td></tr>
+              <tr><td class="et">nad</td><td class="et">on</td><td class="et">ei ole / pole</td><td class="en">they are / are not</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Estonian has no verb "to have". Possession is expressed with <em>olema</em> and the owner in the <strong>-l</strong> case: <em lang="et">Mul on raamat</em> — literally "On me is a book" = "I have a book".</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ma olen tudeng.</p><p class="en-line">I am a student.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Kas sa oled eestlane?</p><p class="en-line">Are you Estonian?</p></div>
+          <div class="ex"><p class="et-line" lang="et">Me oleme kodus.</p><p class="en-line">We are at home.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Nad ei ole praegu siin.</p><p class="en-line">They are not here right now.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Mul on kaks venda.</p><p class="en-line">I have two brothers.</p></div>
+        </div>
+      </section>
+
+      <section id="numbers">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Numbers 1–10</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Number</th><th>Estonian</th><th>Rough pronunciation</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="et">üks</td><td class="en">ewks (rounded "ee")</td></tr>
+              <tr><td>2</td><td class="et">kaks</td><td class="en">kahks</td></tr>
+              <tr><td>3</td><td class="et">kolm</td><td class="en">kolm</td></tr>
+              <tr><td>4</td><td class="et">neli</td><td class="en">NEH-li</td></tr>
+              <tr><td>5</td><td class="et">viis</td><td class="en">vees (long "ee")</td></tr>
+              <tr><td>6</td><td class="et">kuus</td><td class="en">koos (long "oo")</td></tr>
+              <tr><td>7</td><td class="et">seitse</td><td class="en">SAYT-seh</td></tr>
+              <tr><td>8</td><td class="et">kaheksa</td><td class="en">KAH-hek-sah</td></tr>
+              <tr><td>9</td><td class="et">üheksa</td><td class="en">EW-hek-sah</td></tr>
+              <tr><td>10</td><td class="et">kümme</td><td class="en">KEWM-meh</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>After any number from two upwards, the noun goes into the <strong>partitive singular</strong>, not the plural: <em lang="et">üks raamat</em>, but <em lang="et">kaks raamatut</em>, <em lang="et">kümme raamatut</em>.</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Mul on kolm õde.</p><p class="en-line">I have three sisters.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Palun kaks kohvi.</p><p class="en-line">Two coffees, please.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Kell on viis.</p><p class="en-line">It is five o'clock.</p></div>
+        </div>
+      </section>
+
+      <section id="greetings">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Common greetings &amp; phrases</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Estonian</th><th>English</th></tr></thead>
+            <tbody>
+              <tr><td class="et">Tere!</td><td class="en">Hello!</td></tr>
+              <tr><td class="et">Tere hommikust!</td><td class="en">Good morning!</td></tr>
+              <tr><td class="et">Tere päevast!</td><td class="en">Good afternoon!</td></tr>
+              <tr><td class="et">Tere õhtust!</td><td class="en">Good evening!</td></tr>
+              <tr><td class="et">Head ööd!</td><td class="en">Good night!</td></tr>
+              <tr><td class="et">Head aega!</td><td class="en">Goodbye!</td></tr>
+              <tr><td class="et">Nägemist!</td><td class="en">See you!</td></tr>
+              <tr><td class="et">Aitäh! / Tänan!</td><td class="en">Thank you!</td></tr>
+              <tr><td class="et">Palun</td><td class="en">Please / You're welcome / Here you go</td></tr>
+              <tr><td class="et">Vabandust!</td><td class="en">Sorry! / Excuse me!</td></tr>
+              <tr><td class="et">Kuidas läheb?</td><td class="en">How's it going?</td></tr>
+              <tr><td class="et">Hästi, aitäh!</td><td class="en">Fine, thanks!</td></tr>
+              <tr><td class="et">Jah / Ei</td><td class="en">Yes / No</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p><em>Palun</em> is a wonderfully overloaded word: it means "please" when asking, "here you go" when handing something over, and "you're welcome" in reply to <em>aitäh</em>. When in doubt, <em>palun</em> is rarely wrong.</p>
+          </div>
+        </aside>
+      </section>
+    </section>
+
+    <section class="chapter" id="ch3">
+      <div class="chapter-head">
+        <p class="eyebrow">Peatükk 3 · Tase A2</p>
+        <h2>Elementary</h2>
+        <p class="lead">The full case system at a glance, regular present-tense verbs, saying "no", matching adjectives to nouns, and building simple sentences.</p>
+        <div class="folk-band"></div>
+      </div>
+
+      <section id="fourteen-cases">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>The 14 grammatical cases — overview</h3>
+        <p>Here is the complete system with <em>raamat</em> (book). The first three you already know; cases 4–9 are the <strong>locative cases</strong>, which come in two neat triplets (movement into → being in → movement out of).</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Case</th><th>English name</th><th>Question</th><th>Example</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td class="et">nimetav</td><td>nominative</td><td class="et">kes? mis?</td><td class="et">raamat</td><td class="en">book</td></tr>
+              <tr><td>2</td><td class="et">omastav</td><td>genitive</td><td class="et">kelle? mille?</td><td class="et">raamatu</td><td class="en">of the book</td></tr>
+              <tr><td>3</td><td class="et">osastav</td><td>partitive</td><td class="et">keda? mida?</td><td class="et">raamatut</td><td class="en">(some) book</td></tr>
+              <tr><td>4</td><td class="et">sisseütlev</td><td>illative</td><td class="et">kuhu?</td><td class="et">raamatusse</td><td class="en">into the book</td></tr>
+              <tr><td>5</td><td class="et">seesütlev</td><td>inessive</td><td class="et">kus?</td><td class="et">raamatus</td><td class="en">in the book</td></tr>
+              <tr><td>6</td><td class="et">seestütlev</td><td>elative</td><td class="et">kust?</td><td class="et">raamatust</td><td class="en">out of / about the book</td></tr>
+              <tr><td>7</td><td class="et">alaleütlev</td><td>allative</td><td class="et">kellele? millele?</td><td class="et">raamatule</td><td class="en">onto the book</td></tr>
+              <tr><td>8</td><td class="et">alalütlev</td><td>adessive</td><td class="et">kellel? millel?</td><td class="et">raamatul</td><td class="en">on the book</td></tr>
+              <tr><td>9</td><td class="et">alaltütlev</td><td>ablative</td><td class="et">kellelt? millelt?</td><td class="et">raamatult</td><td class="en">off the book</td></tr>
+              <tr><td>10</td><td class="et">saav</td><td>translative</td><td class="et">kelleks? milleks?</td><td class="et">raamatuks</td><td class="en">(turning) into a book</td></tr>
+              <tr><td>11</td><td class="et">rajav</td><td>terminative</td><td class="et">kelleni? milleni?</td><td class="et">raamatuni</td><td class="en">up to the book</td></tr>
+              <tr><td>12</td><td class="et">olev</td><td>essive</td><td class="et">kellena? millena?</td><td class="et">raamatuna</td><td class="en">as a book</td></tr>
+              <tr><td>13</td><td class="et">ilmaütlev</td><td>abessive</td><td class="et">kelleta? milleta?</td><td class="et">raamatuta</td><td class="en">without the book</td></tr>
+              <tr><td>14</td><td class="et">kaasaütlev</td><td>comitative</td><td class="et">kellega? millega?</td><td class="et">raamatuga</td><td class="en">with the book</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Notice that cases 4–14 are all built on the genitive stem <em>raamatu-</em> plus a regular ending. The endings themselves (<code>-sse</code>, <code>-s</code>, <code>-st</code>, <code>-le</code>, <code>-l</code>, <code>-lt</code>, <code>-ks</code>, <code>-ni</code>, <code>-na</code>, <code>-ta</code>, <code>-ga</code>) never change from noun to noun — only the stem does.</p>
+          </div>
+        </aside>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>The inner triplet (<code>-sse / -s / -st</code>) is for enclosed spaces, and the outer triplet (<code>-le / -l / -lt</code>) for surfaces — compare <em lang="et">majas</em> "in the house" with <em lang="et">laual</em> "on the table". Many nouns also have a short illative: <em lang="et">majja</em> = <em lang="et">majasse</em>.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="present-tense">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Present tense verbs</h3>
+        <p>Regular present-tense endings are added to the verb stem and are the same for every verb in the language:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Ending</th><th>elama (to live)</th><th>õppima (to study)</th></tr></thead>
+            <tbody>
+              <tr><td class="et">ma</td><td class="et">-n</td><td class="et">elan</td><td class="et">õpin</td></tr>
+              <tr><td class="et">sa</td><td class="et">-d</td><td class="et">elad</td><td class="et">õpid</td></tr>
+              <tr><td class="et">ta</td><td class="et">-b</td><td class="et">elab</td><td class="et">õpib</td></tr>
+              <tr><td class="et">me</td><td class="et">-me</td><td class="et">elame</td><td class="et">õpime</td></tr>
+              <tr><td class="et">te</td><td class="et">-te</td><td class="et">elate</td><td class="et">õpite</td></tr>
+              <tr><td class="et">nad</td><td class="et">-vad</td><td class="et">elavad</td><td class="et">õpivad</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>Did you spot <em>õppima → õpin</em>? Many Estonian words alternate between a "strong" and a "weak" stem (<em>pp → p</em>, <em>kk → k</em>, <em>b → v</em>...). This is called <strong>consonant gradation</strong> and it affects nouns too (<em>sõber → sõbra</em>). Learn each verb's <em>ma</em>-form alongside its infinitive.</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ma elan Tartus ja töötan kodus.</p><p class="en-line">I live in Tartu and work from home.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Me õpime eesti keelt.</p><p class="en-line">We are studying Estonian.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ta räägib kolme keelt.</p><p class="en-line">He/She speaks three languages.</p></div>
+        </div>
+      </section>
+
+      <section id="negation">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Negation</h3>
+        <p>Negation is refreshingly simple: put <code>ei</code> before the bare present stem. The verb form is <strong>identical for every person</strong> — no endings at all.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Affirmative</th><th>Negative</th><th>English</th></tr></thead>
+            <tbody>
+              <tr><td class="et">ma elan</td><td class="et">ma ei ela</td><td class="en">I don't live</td></tr>
+              <tr><td class="et">sa elad</td><td class="et">sa ei ela</td><td class="en">you don't live</td></tr>
+              <tr><td class="et">ta elab</td><td class="et">ta ei ela</td><td class="en">he/she doesn't live</td></tr>
+              <tr><td class="et">me elame</td><td class="et">me ei ela</td><td class="en">we don't live</td></tr>
+              <tr><td class="et">te elate</td><td class="et">te ei ela</td><td class="en">you don't live</td></tr>
+              <tr><td class="et">nad elavad</td><td class="et">nad ei ela</td><td class="en">they don't live</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ma ei tea.</p><p class="en-line">I don't know.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ta ei räägi vene keelt.</p><p class="en-line">He/She doesn't speak Russian.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Me ei lähe homme tööle.</p><p class="en-line">We are not going to work tomorrow.</p></div>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Unlike English, there is no "do" helper to juggle — <em>ei</em> + stem covers everything. The negative of <em>olema</em> has a handy fused form: <em>ei ole</em> and <em>pole</em> are fully interchangeable.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="adjectives">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Adjective agreement</h3>
+        <p>An adjective standing before a noun <strong>agrees with it</strong> in case and number — both words take the ending together:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Case</th><th>Phrase</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="et">nimetav</td><td class="et">suur maja</td><td class="en">a big house</td></tr>
+              <tr><td class="et">omastav</td><td class="et">suure maja</td><td class="en">of the big house</td></tr>
+              <tr><td class="et">osastav</td><td class="et">suurt maja</td><td class="en">(a) big house (object)</td></tr>
+              <tr><td class="et">seesütlev</td><td class="et">suures majas</td><td class="en">in the big house</td></tr>
+              <tr><td class="et">alalütlev</td><td class="et">suurel maal</td><td class="en">in the big country(side)</td></tr>
+              <tr><td class="et">kaasaütlev</td><td class="et">suure majaga</td><td class="en">with the big house</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>There is one famous exception: in the last four cases (<strong>rajav, olev, ilmaütlev, kaasaütlev</strong> — <code>-ni</code>, <code>-na</code>, <code>-ta</code>, <code>-ga</code>), the adjective stays in the <strong>genitive</strong> while only the noun takes the ending: <em lang="et">suure majani</em>, <em lang="et">suure majata</em>, <em lang="et">suure majaga</em>.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="sentence-structure">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Basic sentence structure</h3>
+        <p>The neutral order is <strong>Subject – Verb – Object</strong>, just like English. But because cases mark each word's role, the order can flex for emphasis without losing meaning:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Sentence</th><th>Emphasis</th></tr></thead>
+            <tbody>
+              <tr><td class="et">Mari loeb raamatut.</td><td class="en">neutral: Mari is reading a book</td></tr>
+              <tr><td class="et">Raamatut loeb Mari.</td><td class="en">it's Mari (not someone else) who reads the book</td></tr>
+              <tr><td class="et">Täna loeb Mari raamatut.</td><td class="en">today (verb moves to keep second position)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>The third example shows the <strong>verb-second tendency</strong>: when a time or place word opens the sentence, the verb still comes second and the subject slides after it. There is much more on this in the B1 chapter.</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ma joon hommikul kohvi.</p><p class="en-line">I drink coffee in the morning.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Õhtul vaatame me filmi.</p><p class="en-line">In the evening we watch a film.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Eesti keelt õpin ma iga päev.</p><p class="en-line">Estonian I study every day. (emphasis on Estonian)</p></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="chapter" id="ch4">
+      <div class="chapter-head">
+        <p class="eyebrow">Peatükk 4 · Tase B1</p>
+        <h2>Intermediate</h2>
+        <p class="lead">Talking about the past and the future, placing things in space with postpositions, being polite with the conditional, asking real questions, and mastering word order.</p>
+        <div class="folk-band"></div>
+      </div>
+
+      <section id="past-future">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Past &amp; future tenses</h3>
+        <p>Estonian has three past tenses. The workhorse is the <strong>simple past</strong> (<em>lihtminevik</em>), usually marked with <code>-si-</code>:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>õppima → past</th><th>olema → past</th></tr></thead>
+            <tbody>
+              <tr><td class="et">ma</td><td class="et">õppisin</td><td class="et">olin</td></tr>
+              <tr><td class="et">sa</td><td class="et">õppisid</td><td class="et">olid</td></tr>
+              <tr><td class="et">ta</td><td class="et">õppis</td><td class="et">oli</td></tr>
+              <tr><td class="et">me</td><td class="et">õppisime</td><td class="et">olime</td></tr>
+              <tr><td class="et">te</td><td class="et">õppisite</td><td class="et">olite</td></tr>
+              <tr><td class="et">nad</td><td class="et">õppisid</td><td class="et">olid</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The two compound pasts are built with <em>olema</em> + the <code>-nud</code> participle, exactly parallel to English "have done / had done":</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tense</th><th>Form</th><th>Example</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td class="et">lihtminevik <span class="en">(simple past)</span></td><td class="et">õppisin</td><td class="et">Ma õppisin eile.</td><td class="en">I studied yesterday.</td></tr>
+              <tr><td class="et">täisminevik <span class="en">(perfect)</span></td><td class="et">olen õppinud</td><td class="et">Ma olen eesti keelt õppinud kaks aastat.</td><td class="en">I have studied Estonian for two years.</td></tr>
+              <tr><td class="et">enneminevik <span class="en">(pluperfect)</span></td><td class="et">olin õppinud</td><td class="et">Ma olin juba õppinud, kui ta saabus.</td><td class="en">I had already studied when he arrived.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>The negative past uses <em>ei</em> + the <code>-nud</code> participle for all persons: <em lang="et">ma ei õppinud</em>, <em lang="et">nad ei läinud</em>. A few common verbs have irregular pasts — most importantly <em>minema</em> (to go) → <em lang="et">läksin</em>, <em lang="et">läinud</em>.</p>
+          </div>
+        </aside>
+        <h4>The future — without a future tense</h4>
+        <p>Estonian has no morphological future. The present tense plus context does the job, with a couple of helper constructions:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Strategy</th><th>Example</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td>present + time word</td><td class="et">Homme lähen ma tööle.</td><td class="en">Tomorrow I'll go to work.</td></tr>
+              <tr><td class="et">hakkama + ma-infinitive</td><td class="et">Ma hakkan eesti keelt õppima.</td><td class="en">I'm going to start learning Estonian.</td></tr>
+              <tr><td class="et">saama <span class="en">(will get/become)</span></td><td class="et">Kõik saab korda.</td><td class="en">Everything will be fine.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="postpositions">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Postpositions</h3>
+        <p>Where English puts prepositions <em>before</em> a noun, Estonian usually puts <strong>postpositions after it</strong>, with the noun in the genitive: <em lang="et">laua peal</em> = "on the table" (literally "table's on-top"). Like the locative cases, they come in triplets:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Meaning</th><th>Where? (static)</th><th>Where to?</th><th>Where from?</th></tr></thead>
+            <tbody>
+              <tr><td class="en">on top of</td><td class="et">peal</td><td class="et">peale</td><td class="et">pealt</td></tr>
+              <tr><td class="en">under</td><td class="et">all</td><td class="et">alla</td><td class="et">alt</td></tr>
+              <tr><td class="en">behind</td><td class="et">taga</td><td class="et">taha</td><td class="et">tagant</td></tr>
+              <tr><td class="en">in front of</td><td class="et">ees</td><td class="et">ette</td><td class="et">eest</td></tr>
+              <tr><td class="en">next to</td><td class="et">kõrval</td><td class="et">kõrvale</td><td class="et">kõrvalt</td></tr>
+              <tr><td class="en">at / by</td><td class="et">juures</td><td class="et">juurde</td><td class="et">juurest</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Raamat on laua peal.</p><p class="en-line">The book is on the table.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Pane raamat laua peale.</p><p class="en-line">Put the book onto the table.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Võta raamat laua pealt.</p><p class="en-line">Take the book off the table.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Buss peatub maja ees.</p><p class="en-line">The bus stops in front of the house.</p></div>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>A handful of words work as prepositions instead, often pairing with a specific case: <em lang="et">ilma autota</em> ("without a car", abessive), <em lang="et">koos sõbraga</em> ("together with a friend", comitative). The triplet logic — static / towards / away — stays the same everywhere.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="conditional">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Conditional mood</h3>
+        <p>The conditional ("would") is marked with <code>-ksi-</code> and is also the standard tool for polite requests:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>elama → conditional</th><th>olema → conditional</th></tr></thead>
+            <tbody>
+              <tr><td class="et">ma</td><td class="et">elaksin</td><td class="et">oleksin</td></tr>
+              <tr><td class="et">sa</td><td class="et">elaksid</td><td class="et">oleksid</td></tr>
+              <tr><td class="et">ta</td><td class="et">elaks</td><td class="et">oleks</td></tr>
+              <tr><td class="et">me</td><td class="et">elaksime</td><td class="et">oleksime</td></tr>
+              <tr><td class="et">te</td><td class="et">elaksite</td><td class="et">oleksite</td></tr>
+              <tr><td class="et">nad</td><td class="et">elaksid</td><td class="et">oleksid</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>In casual speech, the personal endings often drop and the bare <code>-ks</code> form serves every person: <em lang="et">ma elaks</em>, <em lang="et">me läheks</em>. The past conditional ("would have") combines both moods: <em lang="et">ma oleksin õppinud</em> — "I would have studied".</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ma tahaksin kohvi, palun.</p><p class="en-line">I would like a coffee, please.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Kas sa aitaksid mind?</p><p class="en-line">Would you help me?</p></div>
+          <div class="ex"><p class="et-line" lang="et">Kui mul oleks rohkem aega, õpiksin iga päev.</p><p class="en-line">If I had more time, I would study every day.</p></div>
+        </div>
+      </section>
+
+      <section id="questions">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Question formation</h3>
+        <p>Yes/no questions begin with the particle <code>kas</code> — the rest of the sentence keeps normal word order. Content questions begin with a question word:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Question word</th><th>English</th><th>Example</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td class="et">kes</td><td class="en">who</td><td class="et">Kes sa oled?</td><td class="en">Who are you?</td></tr>
+              <tr><td class="et">mis</td><td class="en">what</td><td class="et">Mis see on?</td><td class="en">What is this?</td></tr>
+              <tr><td class="et">kus</td><td class="en">where</td><td class="et">Kus sa elad?</td><td class="en">Where do you live?</td></tr>
+              <tr><td class="et">kuhu</td><td class="en">where to</td><td class="et">Kuhu sa lähed?</td><td class="en">Where are you going?</td></tr>
+              <tr><td class="et">kust</td><td class="en">where from</td><td class="et">Kust sa pärit oled?</td><td class="en">Where are you from?</td></tr>
+              <tr><td class="et">millal</td><td class="en">when</td><td class="et">Millal buss tuleb?</td><td class="en">When does the bus come?</td></tr>
+              <tr><td class="et">miks</td><td class="en">why</td><td class="et">Miks sa õpid eesti keelt?</td><td class="en">Why are you learning Estonian?</td></tr>
+              <tr><td class="et">kuidas</td><td class="en">how</td><td class="et">Kuidas läheb?</td><td class="en">How's it going?</td></tr>
+              <tr><td class="et">kui palju</td><td class="en">how much</td><td class="et">Kui palju see maksab?</td><td class="en">How much does it cost?</td></tr>
+              <tr><td class="et">milline</td><td class="en">which / what kind</td><td class="et">Milline raamat sulle meeldib?</td><td class="en">Which book do you like?</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>Notice the three-way "where": <em>kus</em> (location), <em>kuhu</em> (direction towards), <em>kust</em> (direction from) — the same triplet logic as the locative cases and postpositions. Negative-leaning questions use <code>ega</code>: <em lang="et">Ega sa ei tea, kus ta on?</em> — "You don't happen to know where he is?"</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="word-order">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Word order rules</h3>
+        <p>Estonian word order is flexible but not random. The strongest rule is the <strong>verb-second (V2) tendency</strong>: in a neutral declarative sentence, the finite verb wants to be the second element, whatever comes first.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>First element</th><th>Sentence</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td class="en">subject</td><td class="et">Ma käisin eile poes.</td><td class="en">I went to the shop yesterday.</td></tr>
+              <tr><td class="en">time word</td><td class="et">Eile käisin ma poes.</td><td class="en">Yesterday I went to the shop.</td></tr>
+              <tr><td class="en">place word</td><td class="et">Poes käisin ma eile.</td><td class="en">It was the shop I went to yesterday.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>Good news for anyone who has fought with German: in Estonian subordinate clauses, the verb does <strong>not</strong> move to the end. <em lang="et">Ma tean, et ta elab Tartus</em> — "I know that he lives in Tartu" — keeps plain SVO order inside the <em>et</em>-clause.</p>
+          </div>
+        </aside>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Täna õhtul vaatame me filmi.</p><p class="en-line">This evening we'll watch a film.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Tartus elab palju tudengeid.</p><p class="en-line">Many students live in Tartu.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Suvel sõidame me Saaremaale.</p><p class="en-line">In summer we'll travel to Saaremaa.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="chapter" id="ch5">
+      <div class="chapter-head">
+        <p class="eyebrow">Peatükk 5 · Tase B2</p>
+        <h2>Upper-Intermediate</h2>
+        <p class="lead">The subtler machinery: how object case expresses aspect, joining clauses, the four participles, reporting what others said, and idioms that make you sound local.</p>
+        <div class="folk-band"></div>
+      </div>
+
+      <section id="aspect">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Verb aspect — total vs partial objects</h3>
+        <p>Estonian has no continuous tense and no perfective prefix system. Instead, <strong>the case of the object</strong> tells you whether an action is complete. This is one of the language's most elegant — and most examined — features.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Object case</th><th>Signals</th><th>Example</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td class="et">osastav <span class="en">(partial object)</span></td><td>ongoing, incomplete, or partial action</td><td class="et">Ma lugesin raamatut.</td><td class="en">I was reading the book.</td></tr>
+              <tr><td class="et">omastav <span class="en">(total object, sg)</span></td><td>completed action affecting the whole object</td><td class="et">Ma lugesin raamatu läbi.</td><td class="en">I read the book from cover to cover.</td></tr>
+              <tr><td class="et">nimetav <span class="en">(total object, pl)</span></td><td>completed, whole, plural</td><td class="et">Ma sõin õunad ära.</td><td class="en">I ate (all) the apples.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Completion is often reinforced by a <strong>verbal particle</strong>, a small adverb that works much like English "up" or "through":</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Particle verb</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="et">ära sööma</td><td class="en">to eat up</td></tr>
+              <tr><td class="et">läbi lugema</td><td class="en">to read through</td></tr>
+              <tr><td class="et">valmis kirjutama</td><td class="en">to finish writing</td></tr>
+              <tr><td class="et">üles leidma</td><td class="en">to find, track down</td></tr>
+              <tr><td class="et">ära õppima</td><td class="en">to learn thoroughly, master</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ma sõin suppi.</p><p class="en-line">I was eating (some) soup.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ma sõin supi ära.</p><p class="en-line">I ate the soup up — finished it.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ta kirjutas kirja terve õhtu.</p><p class="en-line">He was writing the letter all evening.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ta kirjutas kirja valmis.</p><p class="en-line">He finished writing the letter.</p></div>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>When in doubt, the partitive is the safer default — verbs of emotion, perception, and ongoing activity (<em>armastama</em>, <em>nägema</em>, <em>ootama</em>...) almost always take a partitive object: <em lang="et">Ma armastan sind</em>, never <em>sinu</em>.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="complex-sentences">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Complex sentence construction</h3>
+        <p>Clauses join with conjunctions, and a <strong>comma is written before the subordinate clause</strong> — Estonian comma rules are strict and consistent:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Conjunction</th><th>English</th><th>Example</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td class="et">et</td><td class="en">that</td><td class="et">Ma arvan, et eesti keel on ilus.</td><td class="en">I think that Estonian is beautiful.</td></tr>
+              <tr><td class="et">sest</td><td class="en">because</td><td class="et">Jään koju, sest sajab vihma.</td><td class="en">I'll stay home because it's raining.</td></tr>
+              <tr><td class="et">kui</td><td class="en">if / when</td><td class="et">Kui vihma sajab, jään ma koju.</td><td class="en">If it rains, I'll stay home.</td></tr>
+              <tr><td class="et">kuigi</td><td class="en">although</td><td class="et">Kuigi on külm, lähen ma välja.</td><td class="en">Although it's cold, I'll go out.</td></tr>
+              <tr><td class="et">kuna</td><td class="en">since, as</td><td class="et">Kuna ma õpin, ei saa ma tulla.</td><td class="en">Since I'm studying, I can't come.</td></tr>
+              <tr><td class="et">nii et</td><td class="en">so that</td><td class="et">Räägi valjemini, nii et kõik kuulevad.</td><td class="en">Speak louder, so that everyone hears.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Relative clauses use <code>kes</code> (for people) and <code>mis</code> (for things), and they decline like any other pronoun:</p>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Mees, kes seisab ukse juures, on mu õpetaja.</p><p class="en-line">The man who is standing by the door is my teacher.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Raamat, mille ma eile ostsin, on väga huvitav.</p><p class="en-line">The book that I bought yesterday is very interesting.</p></div>
+          <div class="ex"><p class="et-line" lang="et">See on linn, kus ma sündisin.</p><p class="en-line">This is the city where I was born.</p></div>
+        </div>
+        <aside class="tip blue">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Pane tähele · Note</span>
+            <p>Unlike English, the comma before <em>et</em>, <em>kes</em>, <em>mis</em>, <em>kui</em> and friends is <strong>mandatory</strong>, not stylistic. Estonian readers genuinely notice when it's missing.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="participles">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Participles</h3>
+        <p>Estonian has four participles — two voices times two tenses. Shown here with <em>lugema</em> (to read):</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Participle</th><th>Ending</th><th>Form</th><th>Example phrase</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td>present active</td><td class="et">-v</td><td class="et">lugev</td><td class="et">lugev laps</td><td class="en">a reading child</td></tr>
+              <tr><td>present passive</td><td class="et">-tav</td><td class="et">loetav</td><td class="et">kergesti loetav raamat</td><td class="en">an easily readable book</td></tr>
+              <tr><td>past active</td><td class="et">-nud</td><td class="et">lugenud</td><td class="et">palju lugenud inimene</td><td class="en">a well-read person</td></tr>
+              <tr><td>past passive</td><td class="et">-tud</td><td class="et">loetud</td><td class="et">loetud raamat</td><td class="en">a (finished) read book</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>You already know two of these as verb forms: <code>-nud</code> builds the perfect tenses (<em lang="et">olen lugenud</em>), and <code>-tud</code> builds the passive (<em lang="et">Raamat on läbi loetud</em> — "The book has been read through").</p>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Magav kass lamab diivanil.</p><p class="en-line">The sleeping cat is lying on the sofa.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Väsinud õpetaja läks koju.</p><p class="en-line">The tired teacher went home.</p></div>
+          <div class="ex"><p class="et-line" lang="et">See on kõige loetavam eesti romaan.</p><p class="en-line">This is the most-read Estonian novel.</p></div>
+        </div>
+      </section>
+
+      <section id="reported-speech">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Reported speech</h3>
+        <p>Everyday reported speech uses an <code>et</code>-clause, and — pleasantly — the tense usually <strong>stays the same</strong> as in the original, with no backshifting:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Direct speech</th><th>Reported speech</th><th>Translation</th></tr></thead>
+            <tbody>
+              <tr><td class="et">„Ma tulen homme."</td><td class="et">Ta ütles, et ta tuleb homme.</td><td class="en">He said (that) he's coming tomorrow.</td></tr>
+              <tr><td class="et">„Ma olen väsinud."</td><td class="et">Ta ütles, et ta on väsinud.</td><td class="en">She said (that) she's tired.</td></tr>
+              <tr><td class="et">„Ma õppisin eile."</td><td class="et">Ta ütles, et ta õppis eile.</td><td class="en">He said (that) he studied yesterday.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Estonian also has something rarer: a dedicated <strong>quotative mood</strong> (<em>kaudne kõneviis</em>) with the ending <code>-vat</code>, used for hearsay — information you haven't verified yourself:</p>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Ta tulevat homme.</p><p class="en-line">He is said to be coming tomorrow. / Apparently he's coming tomorrow.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Ta olevat haige.</p><p class="en-line">He is said to be ill.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Seal elavat palju linde.</p><p class="en-line">Many birds supposedly live there.</p></div>
+        </div>
+        <aside class="tip">
+          <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+          <div>
+            <span class="label">Vihje · Tip</span>
+            <p>The quotative is a built-in "allegedly". Newspapers and gossip alike use it to signal second-hand information without spelling out "people say that...". Recognising it is essential at B2; producing it makes you sound impressively fluent.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section id="idioms">
+        <h3><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Common idioms &amp; sayings</h3>
+        <p>Idioms are where grammar meets culture. These are heard constantly in everyday Estonian:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Idiom</th><th>Literally</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="et">Kivi kotti!</td><td class="en">A stone into your bag!</td><td>Good luck! / Break a leg!</td></tr>
+              <tr><td class="et">nagu kala vees</td><td class="en">like a fish in water</td><td>completely in one's element</td></tr>
+              <tr><td class="et">kuldsed käed</td><td class="en">golden hands</td><td>very skilled with one's hands</td></tr>
+              <tr><td class="et">üle kivide ja kändude</td><td class="en">over stones and stumps</td><td>with great difficulty, but onward</td></tr>
+              <tr><td class="et">suu vett täis võtma</td><td class="en">to take a mouth full of water</td><td>to keep silent, say nothing</td></tr>
+              <tr><td class="et">pole pead ega jalgu</td><td class="en">has neither head nor legs</td><td>it makes no sense at all</td></tr>
+              <tr><td class="et">Tasa sõuad, kaugele jõuad.</td><td class="en">Row quietly, you'll get far.</td><td>slow and steady wins the race</td></tr>
+              <tr><td class="et">Kes ees, see mees.</td><td class="en">Whoever is first is the man.</td><td>first come, first served</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="examples">
+          <p class="label"><svg class="star" aria-hidden="true"><use href="#star8"/></svg>Näitelaused · Example sentences</p>
+          <div class="ex"><p class="et-line" lang="et">Sul on homme eksam? Kivi kotti!</p><p class="en-line">You have an exam tomorrow? Good luck!</p></div>
+          <div class="ex"><p class="et-line" lang="et">Tartus tunneb ta end nagu kala vees.</p><p class="en-line">In Tartu he feels completely in his element.</p></div>
+          <div class="ex"><p class="et-line" lang="et">Sellel jutul pole pead ega jalgu.</p><p class="en-line">That story makes no sense at all.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      <div class="folk-band"></div>
+      <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="et-foot" lang="et">Head õppimist!</p>
+      <p>Happy studying — eesti keele grammatika, A1 → B2</p>
+    </footer>
+
+  </div>
+</main>
+
+<script>
+const sidebar=document.getElementById('sidebar');
+const burger=document.getElementById('burger');
+const overlay=document.getElementById('overlay');
+
+function setNav(open){
+  sidebar.classList.toggle('open',open);
+  document.body.classList.toggle('nav-open',open);
+  burger.setAttribute('aria-expanded',String(open));
+}
+
+burger.addEventListener('click',()=>setNav(!sidebar.classList.contains('open')));
+overlay.addEventListener('click',()=>setNav(false));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setNav(false);});
+
+const links=[...document.querySelectorAll('.nav a[href^="#"]')];
+links.forEach(link=>link.addEventListener('click',()=>setNav(false)));
+
+const linkById=new Map(links.map(link=>[link.getAttribute('href').slice(1),link]));
+const targets=[...document.querySelectorAll('main [id]')].filter(el=>linkById.has(el.id));
+
+let ticking=false;
+function highlightNav(){
+  if(ticking)return;
+  ticking=true;
+  requestAnimationFrame(()=>{
+    let current=null;
+    for(const target of targets){
+      if(target.getBoundingClientRect().top<=120)current=target;
+      else break;
+    }
+    links.forEach(link=>link.classList.remove('active'));
+    if(current){
+      const link=linkById.get(current.id);
+      link.classList.add('active');
+      const group=link.closest('.nav-group');
+      const chapterLink=group?group.querySelector('.nav-chapter'):null;
+      if(chapterLink&&chapterLink!==link)chapterLink.classList.add('active');
+    }
+    ticking=false;
+  });
+}
+
+document.addEventListener('scroll',highlightNav,{passive:true});
+window.addEventListener('resize',highlightNav);
+window.addEventListener('load',highlightNav);
+highlightNav();
+</script>
+</body>
+</html>

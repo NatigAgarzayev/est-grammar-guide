@@ -244,14 +244,30 @@ function spreadTopics(list) {
   return out;
 }
 
+/* Scoring weights. Randomness has to be the loudest term or every session
+   replays the same order; the difficulty ramp only nudges. The band bases sit
+   close enough together that review and new sentences interleave at the edges
+   instead of arriving as one predictable block.                            */
+var BAND_BASE = [0, 1200, 1800, 6000];
+var SPREAD = 1500;      /* random range — must dominate the ease term       */
+var RAMP = 25;          /* easy-first bias, deliberately mild               */
+
 function orderQueue(items) {
   var now = Date.now();
   var ranked = items.map(function (it) {          /* score once, then sort */
-    return { it: it, k: band(it, now) * 1000 + ease(it) * 10 + Math.random() * 9 };
+    return { it: it, k: BAND_BASE[band(it, now)] + Math.random() * SPREAD + ease(it) * RAMP };
   }).sort(function (a, b) {
     return a.k - b.k;
   }).map(function (r) { return r.it; });
   return spreadTopics(ranked);
+}
+
+/* How far back a missed sentence goes. Randomised so a session does not fall
+   into a predictable rhythm, and far enough away to be worth recalling.    */
+function requeue(it, verdict) {
+  var min = verdict === 'bad' ? 7 : 14;
+  var gap = min + Math.floor(Math.random() * min);
+  state.queue.splice(Math.min(gap, state.queue.length), 0, it);
 }
 
 function buildQueue() {
@@ -493,8 +509,7 @@ function check() {
   save(KEY.hist, state.history);
 
   /* requeue anything not fully right, so it comes round again */
-  if (res.verdict === 'bad') state.queue.splice(Math.min(4, state.queue.length), 0, it);
-  else if (res.verdict === 'almost') state.queue.splice(Math.min(9, state.queue.length), 0, it);
+  if (res.verdict !== 'ok') requeue(it, res.verdict);
 
   showFeedback(res, it, text);
   renderStats();
@@ -557,7 +572,7 @@ function reveal() {
   h.w++; h.s = 0; h.t = Date.now();
   state.history[k] = h;
   save(KEY.hist, state.history);
-  state.queue.splice(Math.min(4, state.queue.length), 0, it);
+  requeue(it, 'bad');
 
   var box = $('verdict');
   box.className = 'verdict almost';
@@ -915,20 +930,28 @@ function readResponse(r) {
 function askAI(item, answer, res) {
   var box = $('aiBox');
   box.hidden = false;
-  box.className = 'aibox';
+  box.className = 'aibox loading';
   clear(box);
   var h = el('h4');
   h.appendChild(star());
   h.appendChild(document.createTextNode('AI tutor'));
   box.appendChild(h);
-  var p = el('p', 'dots', 'Asking ' + PROVIDERS[ai.provider].label);
-  box.appendChild(p);
+
+  /* a skeleton of the answer that is coming, rather than a line of dots */
+  var wait = el('div', 'ai-loading');
+  var line = el('div', 'ai-thinking');
+  line.appendChild(el('span', 'pulse'));
+  line.appendChild(document.createTextNode('Reading your Estonian with ' + PROVIDERS[ai.provider].label));
+  wait.appendChild(line);
+  ['w1', 'w2', 'w3'].forEach(function (w) { wait.appendChild(el('div', 'ai-skel ' + w)); });
+  box.appendChild(wait);
 
   var token = state.current;
   callAIWithRecovery(buildPrompt(item, answer)).then(function (text) {
     if (state.current !== token) return;          /* moved on already */
     var out = parseAI(text);
     clear(box);
+    box.className = 'aibox';                        /* drop the loading state */
     box.appendChild(h);
 
     if (!out || (!out.note && !out.correction)) {

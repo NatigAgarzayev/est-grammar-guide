@@ -361,5 +361,63 @@ window.ET_RULES = {
     level: 'C1', link: 'index.html#complex-sentences',
     body: 'Fixed correlative frames do a lot of work in polished Estonian: mida ... seda ..., mitte ainult ... vaid ka, ükskõik kui ..., mis ka ei ..., ... asemel. The pieces have to appear in the right order.',
     ex: ['Mida kauem see kestis, seda väsinumaks me muutusime. — The longer it lasted, the more tired we became.']
+  },
+
+  /* ------------------------------------------------- A1, second wave --- */
+  'possessive-a1': {
+    title: 'Possessives — minu, sinu, tema',
+    level: 'A1', link: 'index.html#pronouns',
+    body: 'A possessive is just the genitive of the pronoun, placed in front of the noun: minu/mu, sinu/su, tema/ta, meie, teie, nende. The noun itself does not change, and the short forms are the ones you hear most.',
+    ex: ['See on minu raamat. — This is my book.', 'Nende koer on suur. — Their dog is big.']
+  },
+  'meeldib': {
+    title: 'Liking something — mulle meeldib',
+    level: 'A1', link: 'index.html#cases-intro',
+    body: 'Estonian says the thing pleases you: the person takes the allative (mulle, sulle, talle, meile, teile, neile) and the thing liked is the subject. That means a plural thing takes a plural verb — mulle meeldivad need raamatud.',
+    ex: ['Mulle meeldib kohv. — I like coffee.', 'Mulle ei meeldi talv. — I do not like winter.']
+  },
+  'weather': {
+    title: 'Weather — sentences with no subject',
+    level: 'A1', link: 'index.html#sentence-structure',
+    body: 'Weather sentences often have no subject at all: sajab, on külm, läheb pimedaks. What falls goes into the partitive — sajab vihma, sajab lund.',
+    ex: ['Sajab vihma. — It is raining.', 'Väljas on külm. — It is cold outside.']
+  },
+  'this-that': {
+    title: 'see and need — this and these',
+    level: 'A1', link: 'index.html#pronouns',
+    body: 'see covers both this and that; its plural is need. Both decline like nouns, so as an object they become seda and neid. Estonian rarely distinguishes near from far the way English does.',
+    ex: ['See on tool. — This is a chair.', 'Ma tahan seda. — I want this.']
+  },
+  'kuhu-direction': {
+    title: 'kus, kuhu, kust — where, where to, where from',
+    level: 'A1', link: 'index.html#fourteen-cases',
+    body: 'Estonian marks direction as carefully as position. kus asks where something is, kuhu where it is going, kust where it comes from — and the answer takes a matching ending: koolis, kooli, koolist.',
+    ex: ['Kuhu sa lähed? — Where are you going?', 'Kust sa tuled? — Where are you coming from?']
+  },
+
+  /* ------------------------------------------------- A2, second wave --- */
+  'oskama-saama': {
+    title: 'Can — oskama, saama, võima, tohtima',
+    level: 'A2', link: 'index.html#present-tense',
+    body: 'English can splits four ways. oskama is a learned skill, saama is being able in practice, võima and tohtima are permission. All four take the da-infinitive.',
+    ex: ['Ma oskan ujuda. — I can swim (I know how).', 'Ma ei saa täna tulla. — I cannot come today.']
+  },
+  'conjunctions-a2': {
+    title: 'Joining clauses — ja, aga, või, sest, vaid',
+    level: 'A2', link: 'index.html#sentence-structure',
+    body: 'ja (and) and või (or) join without a comma; aga (but), sest (because) and vaid (but rather) always take one in front. vaid is used only after a negative — mitte täna, vaid homme.',
+    ex: ['Ta on väsinud, aga rõõmus. — She is tired but happy.', 'Ma olen kodus, sest sajab vihma. — I am at home because it is raining.']
+  },
+  'ordinals': {
+    title: 'Ordinal numbers',
+    level: 'A2', link: 'index.html#numbers',
+    body: 'Ordinals are formed from the genitive plus -s: kolm > kolme > kolmas. esimene and teine are irregular and simply learned. They agree with their noun like any adjective: kolmandal korrusel.',
+    ex: ['See on esimene kord. — This is the first time.', 'Ma elan kolmandal korrusel. — I live on the third floor.']
+  },
+  'mitmus-partitive': {
+    title: 'Plural partitive — after palju and negation',
+    level: 'A2', link: 'index.html#fourteen-cases',
+    body: 'A plural amount that is not a definite whole goes into the partitive plural: palju inimesi, ei ole õunu, ostab lilli. It is the plural counterpart of the partitive you already use in the singular.',
+    ex: ['Ma näen palju inimesi. — I see many people.', 'Meil ei ole õunu. — We do not have apples.']
   }
 };

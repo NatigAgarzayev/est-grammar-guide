@@ -195,16 +195,67 @@ function filteredPool() {
   return p;
 }
 
-function shuffle(a) {
-  for (var i = a.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var t = a[i]; a[i] = a[j]; a[j] = t;
+/* ------------------------------------------------------------ ordering -- */
+/* Sentences are not shuffled blindly. Four things decide what comes next:
+
+   1. what you got wrong and have not yet re-mastered comes back first,
+   2. then sentences you have never seen,
+   3. then sentences whose spacing interval has elapsed,
+   4. then everything else, so the session never runs dry.
+
+   Inside each band the easier sentence goes first — shorter model answer and
+   lower level — so a beginner ramps up instead of hitting a wall. A little
+   jitter keeps two sessions from being identical, and a final pass spreads
+   the topics out so you are not drilled on six genitives in a row.         */
+
+var DAY = 86400000;
+var INTERVALS = [0, DAY, 3 * DAY, 7 * DAY, 16 * DAY, 35 * DAY];
+
+function interval(streak) {
+  return INTERVALS[Math.min(streak, INTERVALS.length - 1)];
+}
+
+/* rough difficulty: words to produce, plus a penalty for the level */
+function ease(it) {
+  return tokens(it.et[0]).length + LEVELS.indexOf(it.l) * 1.5;
+}
+
+function band(it, now) {
+  var h = state.history[itemKey(it)];
+  if (!h) return 1;                                   /* never seen */
+  var s = h.s || 0;
+  if ((h.w || 0) > 0 && s < 2) return 0;              /* wrong, not re-mastered */
+  if (now - (h.t || 0) >= interval(s)) return 2;      /* due again */
+  return 3;                                           /* still fresh */
+}
+
+/* Keep runs of the same topic apart: always take the highest-priority item
+   whose topic differs from the one just emitted, falling back to the very
+   next item when everything left shares that topic.                        */
+function spreadTopics(list) {
+  var out = [], pool = list.slice();
+  while (pool.length) {
+    var prev = out.length ? out[out.length - 1].t : null;
+    var i = 0;
+    while (i < pool.length && pool[i].t === prev) i++;
+    if (i === pool.length) i = 0;
+    out.push(pool.splice(i, 1)[0]);
   }
-  return a;
+  return out;
+}
+
+function orderQueue(items) {
+  var now = Date.now();
+  var ranked = items.map(function (it) {          /* score once, then sort */
+    return { it: it, k: band(it, now) * 1000 + ease(it) * 10 + Math.random() * 9 };
+  }).sort(function (a, b) {
+    return a.k - b.k;
+  }).map(function (r) { return r.it; });
+  return spreadTopics(ranked);
 }
 
 function buildQueue() {
-  state.queue = shuffle(filteredPool().slice());
+  state.queue = orderQueue(filteredPool());
   state.session = { answered: 0, correct: 0, streak: 0, best: 0 };
   next();
 }
@@ -360,7 +411,8 @@ function next() {
   var rule = window.ET_RULES[it.t];
   $('itemTopic').textContent = rule ? rule.title : it.t;
   var h = state.history[itemKey(it)];
-  $('itemCount').textContent = h ? ('seen ' + (h.c + h.w) + '× · ' + h.c + ' right') : 'new sentence';
+  var why = ['needs review', 'new sentence', 'due again', 'seen recently'][band(it, Date.now())];
+  $('itemCount').textContent = h ? (why + ' · seen ' + (h.c + h.w) + '× · ' + h.c + ' right') : why;
   $('promptEn').textContent = it.en;
   $('promptHint').textContent = it.h ? 'Hint: ' + it.h : 'Hint: think about which case the ending needs.';
   $('btnHint').disabled = false;
@@ -433,8 +485,10 @@ function check() {
   else { s.correct++; s.streak++; if (s.streak > s.best) s.best = s.streak; }
 
   var k = itemKey(it);
-  var h = state.history[k] || { c: 0, w: 0 };
-  if (res.verdict === 'bad') h.w++; else h.c++;
+  var h = state.history[k] || { c: 0, w: 0, s: 0, t: 0 };
+  if (res.verdict === 'bad') { h.w++; h.s = 0; }     /* s = run of correct answers */
+  else { h.c++; h.s = (h.s || 0) + 1; }
+  h.t = Date.now();                                  /* drives the spacing interval */
   state.history[k] = h;
   save(KEY.hist, state.history);
 
@@ -499,8 +553,8 @@ function reveal() {
   var s = state.session;
   s.answered++; s.streak = 0;
   var k = itemKey(it);
-  var h = state.history[k] || { c: 0, w: 0 };
-  h.w++;
+  var h = state.history[k] || { c: 0, w: 0, s: 0, t: 0 };
+  h.w++; h.s = 0; h.t = Date.now();
   state.history[k] = h;
   save(KEY.hist, state.history);
   state.queue.splice(Math.min(4, state.queue.length), 0, it);
@@ -560,11 +614,87 @@ var PROVIDERS = {
     label: 'OpenRouter',
     model: 'meta-llama/llama-3.3-70b-instruct:free',
     keyUrl: 'https://openrouter.ai/keys',
-    hint: 'Use a model whose name ends in :free.',
+    hint: 'Or just press Connect above — no key page needed.',
     modelsUrl: 'https://openrouter.ai/api/v1/models',
     prefer: [/llama-3\.3-70b.*:free$/, /:free$/]
   }
 };
+
+/* ------------------------------------------------ one-click OpenRouter -- */
+/* OAuth PKCE. The user approves on openrouter.ai and comes back holding a key
+   of their own — so nobody has to visit a key page, and this repo never ships
+   a shared secret it could not keep secret anyway.                          */
+
+var PKCE_KEY = 'et.practice.pkce';
+
+function b64url(buf) {
+  var arr = new Uint8Array(buf), s = '';
+  for (var i = 0; i < arr.length; i++) s += String.fromCharCode(arr[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function callbackUrl() { return location.origin + location.pathname; }
+
+function canConnect() {
+  return !!(window.crypto && crypto.subtle && /^https?:$/.test(location.protocol));
+}
+
+function setConnectStatus(msg) {
+  var n = $('aiConnectStatus');
+  if (n) n.textContent = msg;
+}
+
+function startConnect() {
+  if (!canConnect()) {
+    setConnectStatus('One-click connect needs the page served over http(s) — it cannot run from a local file.');
+    return;
+  }
+  var bytes = new Uint8Array(48);
+  crypto.getRandomValues(bytes);
+  var verifier = b64url(bytes);
+  setConnectStatus('Opening OpenRouter…');
+  crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)).then(function (hash) {
+    save(PKCE_KEY, verifier);
+    location.href = 'https://openrouter.ai/auth' +
+      '?callback_url=' + encodeURIComponent(callbackUrl()) +
+      '&code_challenge=' + encodeURIComponent(b64url(hash)) +
+      '&code_challenge_method=S256';
+  }).catch(function (e) {
+    setConnectStatus('Could not start the connection: ' + e.message);
+  });
+}
+
+/* Runs on load: if OpenRouter sent us back with a code, trade it for a key. */
+function finishConnect() {
+  var code = new URLSearchParams(location.search).get('code');
+  if (!code) return;
+  var verifier = load(PKCE_KEY, '');
+  history.replaceState(null, '', callbackUrl());      /* keep the code out of the URL bar */
+  try { localStorage.removeItem(PKCE_KEY); } catch (e) {}
+
+  var panel = document.querySelector('.ai-panel');
+  if (panel) panel.open = true;
+
+  if (!verifier) {
+    setConnectStatus('That connection could not be verified — please press Connect again.');
+    return;
+  }
+  setConnectStatus('Finishing the connection…');
+  fetch('https://openrouter.ai/api/v1/auth/keys', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code: code, code_verifier: verifier, code_challenge_method: 'S256' })
+  }).then(readResponse).then(function (data) {
+    if (!data.key) throw new Error('no key was returned');
+    ai.provider = 'openrouter'; ai.key = data.key;
+    ai.model = ''; ai.models = []; ai.enabled = true;
+    saveAi();
+    setConnectStatus('Connected. The AI tutor is on — your key is stored in this browser only.');
+    return loadModels().then(applyModelList).catch(function () {});
+  }).catch(function (e) {
+    setConnectStatus('Could not finish connecting: ' + e.message);
+  });
+}
 
 function authHeaders() {
   return ai.provider === 'gemini'
@@ -594,7 +724,14 @@ function loadModels() {
     } else {
       (data.data || []).forEach(function (m) { if (m.id) ids.push(m.id); });
     }
-    return ids.filter(isChatModel).sort();
+    ids = ids.filter(isChatModel);
+    /* OpenRouter lists hundreds of paid models — keep the free ones, which is
+       the whole point here. A different id can still be typed by hand.      */
+    if (ai.provider === 'openrouter') {
+      var free = ids.filter(function (id) { return /:free$/.test(id); });
+      if (free.length) ids = free;
+    }
+    return ids.sort();
   });
 }
 
@@ -654,21 +791,78 @@ function buildPrompt(item, answer) {
     'Reference translations: ' + item.et.join(' | '),
     'Learner wrote: ' + answer,
     '',
-    'Reply with JSON only, no markdown fence, in this shape:',
-    '{"verdict":"correct|acceptable|incorrect","correction":"the corrected Estonian sentence","note":"at most two sentences of English explanation"}',
+    'Answer with exactly three lines, nothing else. No JSON, no braces, no quotation marks, no markdown:',
+    'VERDICT: correct or acceptable or incorrect',
+    'CORRECTION: the corrected Estonian sentence on one line',
+    'EXPLANATION: one or two sentences, written in English',
     '',
-    'verdict "acceptable" means the learner produced correct, natural Estonian that conveys the English sentence even though it differs from the references.',
-    'In "note", name the actual grammar point that went wrong (which case, which ending, which word order rule). If nothing is wrong, say briefly why the learner version also works.'
+    'Use "acceptable" when the learner produced correct, natural Estonian that conveys the English sentence even though it differs from the references.',
+    'In EXPLANATION name the grammar point that went wrong — which case, which ending, which word-order rule. If nothing is wrong, say briefly why the learner version also works.',
+    'Write the explanation in English even though the sentences are Estonian.'
   ].join('\n');
 }
 
-function parseJson(text) {
+/* Models are unreliable about escaping, and a half-broken JSON blob must never
+   reach the page as raw text. So: read the labelled format first, fall back to
+   JSON, then to a loose field scrape, and only then treat the whole reply as
+   prose. Whatever happens, the user sees sentences, not syntax.            */
+function parseAI(text) {
   if (!text) return null;
-  var t = String(text).replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();
-  try { return JSON.parse(t); } catch (e) {}
-  var m = t.match(/\{[\s\S]*\}/);
-  if (m) { try { return JSON.parse(m[0]); } catch (e2) {} }
-  return null;
+  var t = String(text).replace(/```[a-z]*/gi, '').trim();
+  var out = { verdict: '', correction: '', note: '' };
+
+  var labelled = /VERDICT\s*:\s*(.+)/i.exec(t);
+  if (labelled) {
+    out.verdict = cleanField(labelled[1]).toLowerCase();
+    var c = /CORRECTION\s*:\s*(.+)/i.exec(t);
+    var e = /EXPLANATION\s*:\s*([\s\S]+)/i.exec(t);
+    if (c) out.correction = cleanField(c[1]);
+    if (e) out.note = cleanField(e[1]);
+    if (out.correction || out.note) return normalizeVerdict(out);
+  }
+
+  try {                                        /* a well-formed JSON reply */
+    var j = JSON.parse(t.replace(/^[^{]*/, '').replace(/[^}]*$/, ''));
+    return normalizeVerdict({
+      verdict: cleanField(j.verdict || '').toLowerCase(),
+      correction: cleanField(j.correction || ''),
+      note: cleanField(j.note || j.explanation || '')
+    });
+  } catch (err) {}
+
+  /* broken JSON — scrape the fields out by hand rather than show the blob */
+  var v = /verdict\s*"?\s*[:=]\s*"?\s*([a-zäöõüšž]+)/i.exec(t);
+  var cr = /correction\s*"?\s*[:=]\s*"?([^"\n]*?)"?\s*[,}\n]/i.exec(t);
+  var nt = /(?:note|explanation)\s*"?\s*[:=]\s*"?([\s\S]*?)"?\s*\}?\s*$/i.exec(t);
+  if (v || cr || nt) {
+    return normalizeVerdict({
+      verdict: v ? v[1].toLowerCase() : '',
+      correction: cr ? cleanField(cr[1]) : '',
+      note: nt ? cleanField(nt[1]) : ''
+    });
+  }
+
+  /* no structure at all — if it reads like prose, show it as the note */
+  var prose = cleanField(t);
+  return prose && !/[{}]/.test(prose) ? normalizeVerdict({ verdict: '', correction: '', note: prose }) : null;
+}
+
+/* strip the punctuation scaffolding a model may leave behind */
+function cleanField(s) {
+  return String(s == null ? '' : s)
+    .replace(/\\"/g, '"').replace(/\\n/g, ' ').replace(/\\\\/g, '')
+    .replace(/^[\s"'`]+|[\s"'`,]+$/g, '')
+    .replace(/^\{+|\}+$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normalizeVerdict(o) {
+  if (/accept/i.test(o.verdict)) o.verdict = 'acceptable';
+  else if (/correct/i.test(o.verdict) && !/in/i.test(o.verdict)) o.verdict = 'correct';
+  else if (/incorrect|wrong|vale/i.test(o.verdict)) o.verdict = 'incorrect';
+  else o.verdict = '';
+  return o;
 }
 
 function callAI(prompt) {
@@ -680,7 +874,7 @@ function callAI(prompt) {
       headers: { 'Content-Type': 'application/json', 'x-goog-api-key': ai.key },
       body: JSON.stringify({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.2, responseMimeType: 'application/json' }
+        generationConfig: { temperature: 0.2 }
       })
     }).then(readResponse).then(function (data) {
       var c = data.candidates && data.candidates[0];
@@ -696,7 +890,6 @@ function callAI(prompt) {
     temperature: 0.2,
     messages: [{ role: 'user', content: prompt }]
   };
-  if (ai.provider === 'groq') body.response_format = { type: 'json_object' };
   return fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ai.key },
@@ -734,23 +927,30 @@ function askAI(item, answer, res) {
   var token = state.current;
   callAIWithRecovery(buildPrompt(item, answer)).then(function (text) {
     if (state.current !== token) return;          /* moved on already */
-    var out = parseJson(text);
+    var out = parseAI(text);
     clear(box);
     box.appendChild(h);
-    if (!out) {
-      box.appendChild(el('p', null, text ? String(text).slice(0, 400) : 'No answer came back.'));
+
+    if (!out || (!out.note && !out.correction)) {
+      box.appendChild(el('p', null,
+        'The model replied in a form this page could not read. Your answer is still marked by the checker above.'));
       return;
     }
+
+    if (out.verdict) {
+      var chip = el('span', 'ai-chip ' + out.verdict,
+        out.verdict === 'acceptable' ? 'Also correct' :
+        out.verdict === 'correct' ? 'Correct' : 'Not correct');
+      h.appendChild(chip);
+    }
     if (out.correction && normalize(out.correction) !== normalize(answer)) {
-      var c = el('p');
-      c.appendChild(el('b', null, 'Suggested: '));
-      c.appendChild(document.createTextNode(out.correction));
-      box.appendChild(c);
+      box.appendChild(el('p', 'ai-fix', out.correction));
     }
     if (out.note) box.appendChild(el('p', null, out.note));
+
     if ((out.verdict === 'correct' || out.verdict === 'acceptable') && res.verdict !== 'ok') {
       upgrade(item, res);
-      box.appendChild(el('p', null, 'The AI check accepts your version, so it has been counted as correct.'));
+      box.appendChild(el('p', 'ai-upgrade', 'The AI check accepts your version, so it has been counted as correct.'));
     }
   }).catch(function (err) {
     if (state.current !== token) return;
@@ -773,7 +973,7 @@ function upgrade(item, res) {
     if (s.streak > s.best) s.best = s.streak;
     var k = itemKey(item);
     var h = state.history[k];
-    if (h && h.w > 0) { h.w--; h.c++; save(KEY.hist, state.history); }
+    if (h && h.w > 0) { h.w--; h.c++; h.s = 1; save(KEY.hist, state.history); }
   }
   var box = $('verdict');
   box.className = 'verdict ok';
@@ -895,6 +1095,13 @@ function init() {
     saveAi();
     $('aiStatus').textContent = 'Key removed from this browser.';
   });
+  $('btnConnectOR').addEventListener('click', startConnect);
+  if (!canConnect()) {
+    $('btnConnectOR').disabled = true;
+    setConnectStatus('Available once the page is served over http(s).');
+  }
+  finishConnect();                       /* handles the redirect back from OpenRouter */
+
   $('btnAiModels').addEventListener('click', function () {
     var st = $('aiModelStatus');
     if (!ai.key) { st.textContent = 'Add a key first — the list depends on it.'; return; }
@@ -908,11 +1115,12 @@ function init() {
     var st = $('aiStatus');
     if (!ai.key) { st.textContent = 'Add a key first.'; return; }
     st.textContent = 'Testing…';
-    callAIWithRecovery('Reply with JSON only: {"verdict":"correct","correction":"Ma olen kodus.","note":"test"}')
+    callAIWithRecovery('Answer with one line only:\nVERDICT: correct')
       .then(function (t) {
-        st.textContent = parseJson(t)
+        var p = parseAI(t);
+        st.textContent = p
           ? 'Works — ' + PROVIDERS[ai.provider].label + ' answered with ' + aiModel() + '.'
-          : 'Connected, but the answer was not valid JSON. Try another model.';
+          : 'Connected, but the reply could not be read. Try another model.';
       })
       .catch(function (e) {
         st.textContent = 'Failed: ' + e.message +

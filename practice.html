@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harjutused — Estonian Translation Practice A1–C1</title>
+<meta name="description" content="Translate English sentences into Estonian and get your mistakes marked word by word, with the grammar rule behind each one. Levels A1 to C1.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5.8' y='5.8' width='12.4' height='12.4' fill='%23C2913A'/%3E%3Crect x='5.8' y='5.8' width='12.4' height='12.4' transform='rotate(45 12 12)' fill='%23C2913A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/practice.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="star8" viewBox="0 0 24 24">
+    <rect x="5.8" y="5.8" width="12.4" height="12.4"></rect>
+    <rect x="5.8" y="5.8" width="12.4" height="12.4" transform="rotate(45 12 12)"></rect>
+  </symbol>
+</svg>
+
+<div class="topbar">
+  <button class="burger" id="burger" aria-expanded="false" aria-controls="sidebar" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+  <span class="t-title">Harjutused</span>
+  <a class="t-cta" href="index.html">Guide</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="Levels and topics">
+  <a class="brand" href="practice.html">
+    <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+    <span>
+      <span class="brand-title">Eesti keele grammatika</span>
+      <span class="brand-sub">Practice · A1–C1</span>
+    </span>
+  </a>
+  <div class="mode-switch">
+    <a href="index.html"><svg aria-hidden="true"><use href="#star8"/></svg>Guide</a>
+    <a href="practice.html" aria-current="page">Exercises</a>
+  </div>
+  <nav class="nav" id="practiceNav" aria-label="Levels and topics"></nav>
+  <p class="sidebar-foot">Harjutamine teeb meistriks</p>
+</aside>
+
+<main class="content">
+  <div class="page practice">
+
+    <header class="hero" id="top">
+      <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="eyebrow">Harjutused · Practice</p>
+      <h1>Translate into Estonian</h1>
+      <p class="lead">Read the English sentence, write it in Estonian, and see exactly which word went wrong — with the rule behind it. Pick your level below; sentences you miss come back later in the session.</p>
+      <div class="folk-band"></div>
+    </header>
+
+    <section class="setup" aria-label="Practice settings">
+      <div class="setup-row">
+        <span class="setup-label">Level</span>
+        <div class="pills" id="levelPills"></div>
+      </div>
+      <div class="setup-row">
+        <span class="setup-label">Topic</span>
+        <select class="control" id="topicSelect" aria-label="Grammar topic"></select>
+        <select class="control" id="modeSelect" aria-label="Practice mode">
+          <option value="mixed">All sentences</option>
+          <option value="new">Only ones I have not seen</option>
+          <option value="review">Only ones I got wrong</option>
+        </select>
+        <span class="setup-note" id="poolCount"></span>
+      </div>
+    </section>
+
+    <div class="statstrip">
+      <div class="stat"><span class="v" id="statAnswered">0</span><span class="k">Answered</span></div>
+      <div class="stat"><span class="v" id="statAccuracy">—</span><span class="k">Accuracy</span></div>
+      <div class="stat" id="streakStat"><span class="v" id="statStreak">0</span><span class="k">Streak</span></div>
+      <div class="stat"><span class="v" id="statLeft">0</span><span class="k">Remaining</span></div>
+    </div>
+    <div class="progress"><i id="progressBar" style="width:0%"></i></div>
+
+    <section class="card" id="cardWrap" aria-live="polite">
+      <div class="card-meta">
+        <span class="badge a1" id="itemBadge">A1</span>
+        <span class="topic" id="itemTopic"></span>
+        <span class="count" id="itemCount"></span>
+      </div>
+
+      <p class="prompt-label">Translate this sentence</p>
+      <p class="prompt-en" id="promptEn"></p>
+      <p class="prompt-hint" id="promptHint"></p>
+
+      <div class="answer-wrap">
+        <label class="fb-label" for="answerInput">Your Estonian</label>
+        <textarea class="answer" id="answerInput" rows="2" spellcheck="false" autocomplete="off"
+          autocapitalize="sentences" placeholder="Kirjuta siia…"></textarea>
+        <div class="charbar">
+          <button class="charbtn" type="button" data-ch="õ" title="Insert õ">õ</button>
+          <button class="charbtn" type="button" data-ch="ä" title="Insert ä">ä</button>
+          <button class="charbtn" type="button" data-ch="ö" title="Insert ö">ö</button>
+          <button class="charbtn" type="button" data-ch="ü" title="Insert ü">ü</button>
+          <button class="charbtn" type="button" data-ch="š" title="Insert š">š</button>
+          <button class="charbtn" type="button" data-ch="ž" title="Insert ž">ž</button>
+          <span class="spacerhint">Enter to check · Shift+Enter for a new line</span>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn btn-primary" id="btnCheck" type="button" disabled>Check</button>
+        <button class="btn btn-primary" id="btnNext" type="button" hidden>Next sentence →</button>
+        <div class="right">
+          <button class="btn btn-ghost" id="btnHint" type="button">Hint</button>
+          <button class="btn btn-ghost" id="btnReveal" type="button">Show answer</button>
+          <button class="btn btn-ghost" id="btnSkip" type="button">Skip</button>
+        </div>
+      </div>
+
+      <div class="feedback" id="feedback">
+        <div class="verdict ok" id="verdict"></div>
+
+        <div class="fb-block" id="diffBlock">
+          <p class="fb-label">Your answer, corrected</p>
+          <p class="diff" id="diffLine"></p>
+        </div>
+
+        <div class="fb-block">
+          <p class="fb-label">Model answer</p>
+          <p class="answer-model" id="modelAnswer"></p>
+          <p class="answer-alts" id="answerAlts"></p>
+        </div>
+
+        <div class="rulecard" id="ruleBox"></div>
+        <div class="aibox" id="aiBox" hidden></div>
+      </div>
+    </section>
+
+    <section class="done" id="doneWrap" hidden>
+      <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+      <h3>Tubli töö!</h3>
+      <p id="doneText"></p>
+      <button class="btn btn-primary" id="btnRestart" type="button">Start another round</button>
+    </section>
+
+    <details class="ai-panel">
+      <summary>
+        <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+        AI tutor — optional second opinion
+        <span class="state" id="aiState">off</span>
+      </summary>
+      <div class="ai-body">
+        <p>Everything above works offline. If you switch this on, answers that the built-in checker
+          marks as wrong are also sent to a free AI model, which can accept a valid translation the
+          sentence bank does not list and explain the mistake in its own words.
+          <a id="aiKeyLink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Get a free key</a> —
+          <span id="aiProviderHint"></span></p>
+
+        <div class="ai-field">
+          <label for="aiProvider">Provider</label>
+          <select class="control" id="aiProvider">
+            <option value="gemini">Google Gemini (free tier)</option>
+            <option value="groq">Groq (free tier)</option>
+            <option value="openrouter">OpenRouter (:free models)</option>
+          </select>
+        </div>
+        <div class="ai-field">
+          <label for="aiKey">API key</label>
+          <input class="control" id="aiKey" type="password" autocomplete="off" spellcheck="false" placeholder="paste your own key">
+        </div>
+        <div class="ai-field">
+          <label for="aiModel">Model</label>
+          <input class="control" id="aiModel" type="text" autocomplete="off" spellcheck="false">
+        </div>
+
+        <p class="ai-warn">The key is kept only in this browser’s local storage and is sent straight
+          to the provider you choose — there is no server in between. Do not use a shared computer for this,
+          and remove the key when you are done.</p>
+
+        <div class="ai-field">
+          <label for="aiEnabled">Use it</label>
+          <input id="aiEnabled" type="checkbox">
+          <button class="btn" id="btnAiTest" type="button">Test connection</button>
+          <button class="btn btn-ghost" id="btnAiForget" type="button">Forget key</button>
+          <span class="ai-status" id="aiStatus"></span>
+        </div>
+      </div>
+    </details>
+
+    <footer>
+      <div class="folk-band"></div>
+      <svg class="star" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="et-foot">Harjutamine teeb meistriks.</p>
+      <p>Practice makes perfect. · <a href="index.html">Back to the grammar guide</a></p>
+    </footer>
+
+  </div>
+</main>
+
+<script src="assets/rules.js" charset="utf-8"></script>
+<script src="assets/items.js" charset="utf-8"></script>
+<script src="assets/practice.js" charset="utf-8"></script>
+</body>
+</html>

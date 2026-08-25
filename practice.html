@@ -170,8 +170,11 @@
         </div>
         <div class="ai-field">
           <label for="aiModel">Model</label>
-          <input class="control" id="aiModel" type="text" autocomplete="off" spellcheck="false">
+          <input class="control" id="aiModel" type="text" autocomplete="off" spellcheck="false" list="aiModelList">
+          <datalist id="aiModelList"></datalist>
+          <button class="btn" id="btnAiModels" type="button">Load models</button>
         </div>
+        <p class="ai-status" id="aiModelStatus"></p>
 
         <p class="ai-warn">The key is kept only in this browser’s local storage and is sent straight
           to the provider you choose — there is no server in between. Do not use a shared computer for this,

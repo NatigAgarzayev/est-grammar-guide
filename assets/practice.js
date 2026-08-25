@@ -40,7 +40,8 @@ if (!Array.isArray(state.levels) || !state.levels.length) state.levels = ['A1'];
 state.levels = state.levels.filter(function (l) { return LEVELS.indexOf(l) > -1; });
 if (!state.levels.length) state.levels = ['A1'];
 
-var ai = load(KEY.ai, { provider: 'gemini', key: '', model: '', enabled: false });
+var ai = load(KEY.ai, { provider: 'gemini', key: '', model: '', enabled: false, models: [] });
+if (!Array.isArray(ai.models)) ai.models = [];   /* older saved settings had no list */
 
 function itemKey(it) { return it.en; }
 
@@ -543,21 +544,105 @@ var PROVIDERS = {
     label: 'Google Gemini',
     model: 'gemini-2.5-flash',
     keyUrl: 'https://aistudio.google.com/apikey',
-    hint: 'Free tier available with a Google account — no card required.'
+    hint: 'Free tier available with a Google account — no card required.',
+    modelsUrl: 'https://generativelanguage.googleapis.com/v1beta/models',
+    prefer: [/^gemini-2\.5-flash$/, /^gemini-2\.0-flash$/, /flash/, /gemini/]
   },
   groq: {
     label: 'Groq',
-    model: 'llama-3.3-70b-versatile',
+    model: 'llama-3.1-8b-instant',
     keyUrl: 'https://console.groq.com/keys',
-    hint: 'Free tier with generous rate limits.'
+    hint: 'Free keys reach only part of the catalogue — press Load models to see yours.',
+    modelsUrl: 'https://api.groq.com/openai/v1/models',
+    prefer: [/gpt-oss-120b/, /llama-3\.3-70b/, /gpt-oss-20b/, /llama-3\.1-8b-instant/, /llama/]
   },
   openrouter: {
     label: 'OpenRouter',
     model: 'meta-llama/llama-3.3-70b-instruct:free',
     keyUrl: 'https://openrouter.ai/keys',
-    hint: 'Use a model whose name ends in :free.'
+    hint: 'Use a model whose name ends in :free.',
+    modelsUrl: 'https://openrouter.ai/api/v1/models',
+    prefer: [/llama-3\.3-70b.*:free$/, /:free$/]
   }
 };
+
+function authHeaders() {
+  return ai.provider === 'gemini'
+    ? { 'x-goog-api-key': ai.key }
+    : { 'Authorization': 'Bearer ' + ai.key };
+}
+
+/* speech, embedding and guard models cannot answer a grammar question */
+function isChatModel(id) {
+  return !/whisper|tts|embed|guard|orpheus|moderation|rerank|speech/i.test(id);
+}
+
+/* Ask the provider which models THIS key may actually use. Model ranges shift
+   over time and free keys see only part of the catalogue, so a hard-coded
+   default eventually returns 404 — this is the cure for that. */
+function loadModels() {
+  var p = PROVIDERS[ai.provider];
+  return fetch(p.modelsUrl, { headers: authHeaders() }).then(readResponse).then(function (data) {
+    var ids = [];
+    if (ai.provider === 'gemini') {
+      (data.models || []).forEach(function (m) {
+        var methods = m.supportedGenerationMethods || [];
+        if (methods.indexOf('generateContent') > -1) {
+          ids.push(String(m.name || '').replace(/^models\//, ''));
+        }
+      });
+    } else {
+      (data.data || []).forEach(function (m) { if (m.id) ids.push(m.id); });
+    }
+    return ids.filter(isChatModel).sort();
+  });
+}
+
+function pickModel(ids) {
+  var prefer = PROVIDERS[ai.provider].prefer || [];
+  for (var i = 0; i < prefer.length; i++) {
+    for (var j = 0; j < ids.length; j++) {
+      if (prefer[i].test(ids[j])) return ids[j];
+    }
+  }
+  return ids[0];
+}
+
+/* Remember the list alongside the key, so the dropdown is still there after a
+   reload and nobody has to fetch it twice. Returns true when the model was
+   changed because the old one was not on the list.                          */
+function applyModelList(ids) {
+  ai.models = ids;
+  if (!ids.length) {
+    saveAi();
+    $('aiModelStatus').textContent = 'The provider returned no usable chat models for this key.';
+    return false;
+  }
+  var current = aiModel();
+  var changed = ids.indexOf(current) === -1;
+  if (changed) ai.model = pickModel(ids);
+  saveAi();                                  /* redraws the panel and the datalist */
+  if (changed) {
+    $('aiModelStatus').textContent = 'This key cannot use ' + current + ' — switched to ' +
+      ai.model + ' (' + ids.length + ' available).';
+  }
+  return changed;
+}
+
+function isModelError(err) {
+  return /HTTP (400|404)/.test(err.message) && /model/i.test(err.message);
+}
+
+/* One automatic retry: if the model id is the problem, re-discover and repeat */
+function callAIWithRecovery(prompt) {
+  return callAI(prompt).catch(function (err) {
+    if (!isModelError(err)) throw err;
+    return loadModels().then(function (ids) {
+      if (!applyModelList(ids)) throw err;
+      return callAI(prompt);
+    });
+  });
+}
 
 function aiModel() { return (ai.model && ai.model.trim()) || PROVIDERS[ai.provider].model; }
 
@@ -647,7 +732,7 @@ function askAI(item, answer, res) {
   box.appendChild(p);
 
   var token = state.current;
-  callAI(buildPrompt(item, answer)).then(function (text) {
+  callAIWithRecovery(buildPrompt(item, answer)).then(function (text) {
     if (state.current !== token) return;          /* moved on already */
     var out = parseJson(text);
     clear(box);
@@ -673,7 +758,9 @@ function askAI(item, answer, res) {
     clear(box);
     box.appendChild(h);
     box.appendChild(el('p', null, 'AI check failed: ' + err.message));
-    box.appendChild(el('p', null, 'The exercise itself is unaffected — check the key and model in AI settings, or switch the AI check off.'));
+    box.appendChild(el('p', null, isModelError(err)
+      ? 'That model is not available to your key. Open AI settings and press Load models to pick one that is.'
+      : 'The exercise itself is unaffected — check the key and model in AI settings, or switch the AI check off.'));
   });
 }
 
@@ -698,11 +785,25 @@ function upgrade(item, res) {
 
 /* ------------------------------------------------------- AI settings UI -- */
 function renderAiPanel() {
+  if (!PROVIDERS[ai.provider]) ai.provider = 'gemini';   /* guard against stale saved settings */
   $('aiProvider').value = ai.provider;
   $('aiKey').value = ai.key || '';
   $('aiModel').value = ai.model || '';
   $('aiModel').placeholder = PROVIDERS[ai.provider].model;
   $('aiEnabled').checked = !!ai.enabled;
+
+  /* restore the remembered model list into the dropdown */
+  var list = $('aiModelList');
+  clear(list);
+  var models = ai.models || [];
+  models.forEach(function (m) {
+    var o = document.createElement('option');
+    o.value = m;
+    list.appendChild(o);
+  });
+  if (models.length) {
+    $('aiModelStatus').textContent = models.length + ' models available to this key · using ' + aiModel();
+  }
   $('aiKeyLink').href = PROVIDERS[ai.provider].keyUrl;
   $('aiKeyLink').textContent = 'Get a free ' + PROVIDERS[ai.provider].label + ' key';
   $('aiProviderHint').textContent = PROVIDERS[ai.provider].hint;
@@ -778,25 +879,45 @@ function init() {
   });
 
   $('aiProvider').addEventListener('change', function () {
-    ai.provider = this.value; ai.model = ''; saveAi();
+    /* the remembered list belongs to the old provider, so drop it */
+    ai.provider = this.value; ai.model = ''; ai.models = [];
+    $('aiModelStatus').textContent = '';
+    $('aiStatus').textContent = '';
+    saveAi();
   });
   $('aiKey').addEventListener('change', function () { ai.key = this.value.trim(); saveAi(); });
   $('aiModel').addEventListener('change', function () { ai.model = this.value.trim(); saveAi(); });
   $('aiEnabled').addEventListener('change', function () { ai.enabled = this.checked; saveAi(); });
   $('btnAiForget').addEventListener('click', function () {
-    ai.key = ''; ai.enabled = false; saveAi();
+    /* the model list was discovered with that key, so it goes too */
+    ai.key = ''; ai.enabled = false; ai.model = ''; ai.models = [];
+    $('aiModelStatus').textContent = '';
+    saveAi();
     $('aiStatus').textContent = 'Key removed from this browser.';
   });
+  $('btnAiModels').addEventListener('click', function () {
+    var st = $('aiModelStatus');
+    if (!ai.key) { st.textContent = 'Add a key first — the list depends on it.'; return; }
+    st.textContent = 'Loading…';
+    loadModels()
+      .then(function (ids) { applyModelList(ids); })
+      .catch(function (e) { st.textContent = 'Could not load the model list: ' + e.message; });
+  });
+
   $('btnAiTest').addEventListener('click', function () {
     var st = $('aiStatus');
     if (!ai.key) { st.textContent = 'Add a key first.'; return; }
     st.textContent = 'Testing…';
-    callAI('Reply with JSON only: {"verdict":"correct","correction":"Ma olen kodus.","note":"test"}')
+    callAIWithRecovery('Reply with JSON only: {"verdict":"correct","correction":"Ma olen kodus.","note":"test"}')
       .then(function (t) {
-        st.textContent = parseJson(t) ? 'Works — ' + PROVIDERS[ai.provider].label + ' answered.' :
-          'Connected, but the answer was not valid JSON. Try another model.';
+        st.textContent = parseJson(t)
+          ? 'Works — ' + PROVIDERS[ai.provider].label + ' answered with ' + aiModel() + '.'
+          : 'Connected, but the answer was not valid JSON. Try another model.';
       })
-      .catch(function (e) { st.textContent = 'Failed: ' + e.message; });
+      .catch(function (e) {
+        st.textContent = 'Failed: ' + e.message +
+          (isModelError(e) ? ' — press Load models to see what this key can use.' : '');
+      });
   });
 
   /* the shared sidebar toggle from the guide page */
